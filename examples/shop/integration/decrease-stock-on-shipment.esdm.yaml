@@ -1,0 +1,21 @@
+apiVersion: schema.esdm.io/core/v1
+kind: policy
+name: decrease-stock-on-shipment
+description: Decreases catalog stock for every line item in a shipped order.
+scope:
+  domain: shop
+deliveryGuarantee: at-least-once
+idempotency:
+  owner: self
+  strategy: Tracks which order-shipped events have already produced their decrease-stock commands, so redelivery does not double-decrement stock.
+handles:
+  - boundedContext: ordering
+    aggregate: order
+    event: shipped
+emits:
+  - boundedContext: catalog
+    aggregate: stock
+    command: decrease-stock
+constraints:
+  - name: one-command-per-line-item
+    rule: Emits one decrease-stock command per line item in the shipped order's lineItems, each carrying that line item's sku and quantity.

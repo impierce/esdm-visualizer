@@ -1,0 +1,20 @@
+apiVersion: schema.esdm.io/given-when-then/v1
+kind: feature
+name: adding-item
+description: Behavior of the item aggregate's add-item command.
+scope:
+  domain: shop
+  boundedContext: catalog
+  aggregate: item
+scenarios:
+  - name: adds-new-item
+    description: A new catalog item records its identifying product details.
+    given: []
+    when:
+      command: add-item
+      actor: staff
+      data: { sku: book-light, name: Light, price: 19.99 }
+    then:
+      events:
+        - event: added
+          data: { sku: book-light, name: Light, price: 19.99 }

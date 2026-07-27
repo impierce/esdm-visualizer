@@ -1,0 +1,17 @@
+apiVersion: schema.esdm.io/core/v1
+kind: aggregate
+name: item
+description: Represents a sellable catalog item and its current product details.
+scope:
+  domain: shop
+  boundedContext: catalog
+identifiedBy:
+  source: state
+  field: sku
+state:
+  type: object
+  properties:
+    sku: { type: string }
+    name: { type: string }
+    price: { type: number }
+  required: [sku, name, price]

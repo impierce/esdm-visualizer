@@ -1,0 +1,13 @@
+apiVersion: schema.esdm.io/core/v1
+kind: command
+name: ship-order
+description: Marks a placed order as shipped.
+scope:
+  domain: shop
+  boundedContext: ordering
+  aggregate: order
+data: {}
+publishes:
+  - shipped
+actors:
+  - staff

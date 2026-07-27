@@ -1,0 +1,15 @@
+apiVersion: schema.esdm.io/core/v1
+kind: event
+name: added
+description: Records that an item became available in the catalog.
+scope:
+  domain: shop
+  boundedContext: catalog
+  aggregate: item
+data:
+  type: object
+  properties:
+    sku: { type: string }
+    name: { type: string }
+    price: { type: number }
+  required: [sku, name, price]

@@ -1,0 +1,36 @@
+apiVersion: schema.esdm.io/core/v1
+kind: query
+name: list-orders
+description: Lists orders for staff to follow through fulfillment.
+scope:
+  domain: shop
+  boundedContext: ordering
+readModel: orders
+result:
+  type: array
+  items:
+    type: object
+    properties:
+      orderId: { type: string }
+      lineItems:
+        type: array
+        items:
+          type: object
+          properties:
+            sku: { type: string }
+            quantity: { type: integer }
+          required: [sku, quantity]
+      shippingAddress:
+        type: object
+        properties:
+          street: { type: string }
+          city: { type: string }
+          postalCode: { type: string }
+          country: { type: string }
+        required: [street, city, postalCode, country]
+      status:
+        type: string
+        enum: [placed, shipped]
+    required: [orderId, lineItems, shippingAddress, status]
+actors:
+  - staff

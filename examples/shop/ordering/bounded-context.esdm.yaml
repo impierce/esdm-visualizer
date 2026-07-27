@@ -1,0 +1,6 @@
+apiVersion: schema.esdm.io/core/v1
+kind: bounded-context
+name: ordering
+description: Accepts customer orders and tracks their fulfillment.
+scope:
+  domain: shop

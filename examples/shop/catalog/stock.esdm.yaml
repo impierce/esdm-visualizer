@@ -1,0 +1,19 @@
+apiVersion: schema.esdm.io/core/v1
+kind: aggregate
+name: stock
+description: Tracks the available quantity of a catalog item.
+scope:
+  domain: shop
+  boundedContext: catalog
+identifiedBy:
+  source: state
+  field: sku
+state:
+  type: object
+  properties:
+    sku: { type: string }
+    quantity: { type: integer }
+  required: [sku, quantity]
+invariants:
+  - name: quantity-never-negative
+    rule: Quantity never drops below zero.

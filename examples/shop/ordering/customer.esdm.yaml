@@ -1,0 +1,10 @@
+apiVersion: schema.esdm.io/core/v1
+kind: actor
+name: customer
+description: A shopper who places orders for catalog items.
+scope:
+  domain: shop
+  boundedContext: ordering
+type: human
+responsibilities:
+  - Places orders for items

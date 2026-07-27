@@ -1,0 +1,14 @@
+apiVersion: schema.esdm.io/core/v1
+kind: context-mapping
+name: catalog-conforms-to-ordering
+description: >-
+  Catalog's stock decreases automatically whenever ordering reports a
+  shipment (see the decrease-stock-on-shipment policy); catalog conforms
+  to ordering's event model without shaping it in return.
+type: conformist
+conformist:
+  domain: shop
+  boundedContext: catalog
+upstream:
+  domain: shop
+  boundedContext: ordering

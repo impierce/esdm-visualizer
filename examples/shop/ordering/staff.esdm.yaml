@@ -1,0 +1,10 @@
+apiVersion: schema.esdm.io/core/v1
+kind: actor
+name: staff
+description: A shop employee who fulfills placed orders.
+scope:
+  domain: shop
+  boundedContext: ordering
+type: human
+responsibilities:
+  - Ships placed orders

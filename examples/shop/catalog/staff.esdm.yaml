@@ -1,0 +1,11 @@
+apiVersion: schema.esdm.io/core/v1
+kind: actor
+name: staff
+description: A shop employee who maintains catalog items and stock.
+scope:
+  domain: shop
+  boundedContext: catalog
+type: human
+responsibilities:
+  - Adds new items to the catalog
+  - Restocks items when new inventory arrives
