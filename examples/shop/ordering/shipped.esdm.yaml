@@ -1,0 +1,21 @@
+apiVersion: schema.esdm.io/core/v1
+kind: event
+name: shipped
+description: Records that an order and its line items were shipped.
+scope:
+  domain: shop
+  boundedContext: ordering
+  aggregate: order
+data:
+  type: object
+  properties:
+    lineItems:
+      type: array
+      minItems: 1
+      items:
+        type: object
+        properties:
+          sku: { type: string }
+          quantity: { type: integer }
+        required: [sku, quantity]
+  required: [lineItems]

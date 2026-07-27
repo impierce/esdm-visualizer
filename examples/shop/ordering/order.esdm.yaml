@@ -1,0 +1,37 @@
+apiVersion: schema.esdm.io/core/v1
+kind: aggregate
+name: order
+description: Governs the lifecycle of a customer order from placement to shipment.
+scope:
+  domain: shop
+  boundedContext: ordering
+identifiedBy:
+  source: generated
+  generator: uuid
+state:
+  type: object
+  properties:
+    lineItems:
+      type: array
+      minItems: 1
+      items:
+        type: object
+        properties:
+          sku: { type: string }
+          quantity: { type: integer }
+        required: [sku, quantity]
+    shippingAddress:
+      type: object
+      properties:
+        street: { type: string }
+        city: { type: string }
+        postalCode: { type: string }
+        country: { type: string }
+      required: [street, city, postalCode, country]
+    status:
+      type: string
+      enum: [placed, shipped]
+  required: [lineItems, shippingAddress, status]
+invariants:
+  - name: ships-at-most-once
+    rule: An order transitions from placed to shipped at most once; ship-order has no effect once an order is already shipped.

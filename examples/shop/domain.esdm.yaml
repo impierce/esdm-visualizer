@@ -1,0 +1,4 @@
+apiVersion: schema.esdm.io/core/v1
+kind: domain
+name: shop
+description: Sells catalog items to customers and fulfills their orders.

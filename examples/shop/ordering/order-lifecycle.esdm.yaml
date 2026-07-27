@@ -1,0 +1,78 @@
+apiVersion: schema.esdm.io/given-when-then/v1
+kind: feature
+name: order-lifecycle
+description: Behavior of the order aggregate from placement through shipment.
+scope:
+  domain: shop
+  boundedContext: ordering
+  aggregate: order
+scenarios:
+  - name: places-new-order
+    description: A customer order records its line items and shipping address.
+    given: []
+    when:
+      command: place-order
+      actor: customer
+      data:
+        lineItems:
+          - { sku: book-light, quantity: 2 }
+        shippingAddress:
+          street: 10 Market Street
+          city: Berlin
+          postalCode: "10115"
+          country: DE
+    then:
+      events:
+        - event: placed
+          data:
+            lineItems:
+              - { sku: book-light, quantity: 2 }
+            shippingAddress:
+              street: 10 Market Street
+              city: Berlin
+              postalCode: "10115"
+              country: DE
+  - name: ships-placed-order
+    description: Staff can ship an order that has been placed.
+    given:
+      - event: placed
+        data:
+          lineItems:
+            - { sku: book-light, quantity: 2 }
+          shippingAddress:
+            street: 10 Market Street
+            city: Berlin
+            postalCode: "10115"
+            country: DE
+    when:
+      command: ship-order
+      actor: staff
+      data: {}
+    then:
+      events:
+        - event: shipped
+          data:
+            lineItems:
+              - { sku: book-light, quantity: 2 }
+  - name: ignores-repeat-shipment
+    description: Shipping an already shipped order has no effect.
+    given:
+      - event: placed
+        data:
+          lineItems:
+            - { sku: book-light, quantity: 2 }
+          shippingAddress:
+            street: 10 Market Street
+            city: Berlin
+            postalCode: "10115"
+            country: DE
+      - event: shipped
+        data:
+          lineItems:
+            - { sku: book-light, quantity: 2 }
+    when:
+      command: ship-order
+      actor: staff
+      data: {}
+    then:
+      events: []

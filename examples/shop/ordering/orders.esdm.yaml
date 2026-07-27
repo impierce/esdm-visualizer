@@ -1,0 +1,43 @@
+apiVersion: schema.esdm.io/core/v1
+kind: read-model
+name: orders
+description: Presents placed orders and their current fulfillment status.
+scope:
+  domain: shop
+  boundedContext: ordering
+paradigm: tabular
+schema:
+  type: array
+  items:
+    type: object
+    properties:
+      orderId: { type: string }
+      lineItems:
+        type: array
+        items:
+          type: object
+          properties:
+            sku: { type: string }
+            quantity: { type: integer }
+          required: [sku, quantity]
+      shippingAddress:
+        type: object
+        properties:
+          street: { type: string }
+          city: { type: string }
+          postalCode: { type: string }
+          country: { type: string }
+        required: [street, city, postalCode, country]
+      status:
+        type: string
+        enum: [placed, shipped]
+    required: [orderId, lineItems, shippingAddress, status]
+projections:
+  - boundedContext: ordering
+    aggregate: order
+    event: placed
+    rule: Add a row for the order's id with lineItems, shippingAddress, and status set to placed.
+  - boundedContext: ordering
+    aggregate: order
+    event: shipped
+    rule: Set status to shipped for the order's id.

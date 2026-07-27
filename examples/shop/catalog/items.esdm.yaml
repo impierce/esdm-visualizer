@@ -1,0 +1,31 @@
+apiVersion: schema.esdm.io/core/v1
+kind: read-model
+name: items
+description: Presents catalog items together with their available quantities.
+scope:
+  domain: shop
+  boundedContext: catalog
+paradigm: tabular
+schema:
+  type: array
+  items:
+    type: object
+    properties:
+      sku: { type: string }
+      name: { type: string }
+      price: { type: number }
+      quantity: { type: integer }
+    required: [sku, name, price, quantity]
+projections:
+  - boundedContext: catalog
+    aggregate: item
+    event: added
+    rule: Add a row for sku with name, price, and quantity initialized to 0.
+  - boundedContext: catalog
+    aggregate: stock
+    event: restocked
+    rule: Increase quantity for sku by the restocked amount.
+  - boundedContext: catalog
+    aggregate: stock
+    event: decreased
+    rule: Decrease quantity for sku by the decreased amount.

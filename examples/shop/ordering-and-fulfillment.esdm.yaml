@@ -1,0 +1,41 @@
+apiVersion: schema.esdm.io/domain-storytelling/v1
+kind: domain-story
+name: ordering-and-fulfillment
+description: A customer places an order, staff ships it, and stock decreases accordingly.
+scope:
+  domain: shop
+pointInTime: to-be
+granularity: coarse-grained
+domainPurity: digitalized
+actors:
+  - name: customer
+    annotation: Chooses items and places an order.
+  - name: staff
+    annotation: Fulfills the order.
+sentences:
+  - sequenceNumber: 1
+    workObjects:
+      - name: order
+        annotation: The customer's requested items and shipping destination.
+    edges:
+      - from: { actor: customer }
+        to: { workObject: order }
+        label: places
+  - sequenceNumber: 2
+    workObjects:
+      - name: order
+        annotation: The placed order awaiting fulfillment.
+    edges:
+      - from: { actor: staff }
+        to: { workObject: order }
+        label: ships
+  - sequenceNumber: 3
+    workObjects:
+      - name: order
+        annotation: The shipped order.
+      - name: stock
+        annotation: The available quantity of each shipped item.
+    edges:
+      - from: { workObject: order }
+        to: { workObject: stock }
+        label: decreases

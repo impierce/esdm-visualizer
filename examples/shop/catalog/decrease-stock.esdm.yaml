@@ -1,0 +1,16 @@
+apiVersion: schema.esdm.io/core/v1
+kind: command
+name: decrease-stock
+description: Decreases available stock when units leave inventory.
+scope:
+  domain: shop
+  boundedContext: catalog
+  aggregate: stock
+data:
+  type: object
+  properties:
+    sku: { type: string }
+    quantity: { type: integer }
+  required: [sku, quantity]
+publishes:
+  - decreased

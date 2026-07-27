@@ -1,0 +1,20 @@
+apiVersion: schema.esdm.io/core/v1
+kind: query
+name: list-items
+description: Lists the catalog items and their current availability.
+scope:
+  domain: shop
+  boundedContext: catalog
+readModel: items
+result:
+  type: array
+  items:
+    type: object
+    properties:
+      sku: { type: string }
+      name: { type: string }
+      price: { type: number }
+      quantity: { type: integer }
+    required: [sku, name, price, quantity]
+actors:
+  - customer

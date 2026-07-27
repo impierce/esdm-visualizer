@@ -1,0 +1,33 @@
+apiVersion: schema.esdm.io/core/v1
+kind: command
+name: place-order
+description: Creates an order for selected items and a shipping address.
+scope:
+  domain: shop
+  boundedContext: ordering
+  aggregate: order
+data:
+  type: object
+  properties:
+    lineItems:
+      type: array
+      minItems: 1
+      items:
+        type: object
+        properties:
+          sku: { type: string }
+          quantity: { type: integer }
+        required: [sku, quantity]
+    shippingAddress:
+      type: object
+      properties:
+        street: { type: string }
+        city: { type: string }
+        postalCode: { type: string }
+        country: { type: string }
+      required: [street, city, postalCode, country]
+  required: [lineItems, shippingAddress]
+publishes:
+  - placed
+actors:
+  - customer

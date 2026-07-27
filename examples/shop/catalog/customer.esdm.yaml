@@ -1,0 +1,10 @@
+apiVersion: schema.esdm.io/core/v1
+kind: actor
+name: customer
+description: A shopper who browses items available for purchase.
+scope:
+  domain: shop
+  boundedContext: catalog
+type: human
+responsibilities:
+  - Browses the catalog to see which items are available and in stock

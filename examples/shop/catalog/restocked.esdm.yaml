@@ -1,0 +1,14 @@
+apiVersion: schema.esdm.io/core/v1
+kind: event
+name: restocked
+description: Records an increase in available stock for an item.
+scope:
+  domain: shop
+  boundedContext: catalog
+  aggregate: stock
+data:
+  type: object
+  properties:
+    sku: { type: string }
+    quantity: { type: integer }
+  required: [sku, quantity]

@@ -1,0 +1,19 @@
+apiVersion: schema.esdm.io/core/v1
+kind: command
+name: add-item
+description: Adds a newly sellable item to the catalog.
+scope:
+  domain: shop
+  boundedContext: catalog
+  aggregate: item
+data:
+  type: object
+  properties:
+    sku: { type: string }
+    name: { type: string }
+    price: { type: number }
+  required: [sku, name, price]
+publishes:
+  - added
+actors:
+  - staff
