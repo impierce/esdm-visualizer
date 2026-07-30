@@ -66,14 +66,16 @@
 			<div class="flex min-h-0 flex-1 flex-col overflow-hidden">
 				<!-- Feature tabs (if >1) -->
 				{#if features.length > 1}
-					<div class="flex gap-1 border-b border-slate-100 bg-white px-4 pt-3 pb-0">
+					<div
+						class="flex gap-1 border-b border-slate-100 bg-white px-4 pt-3 pb-0 dark:border-slate-800 dark:bg-slate-900"
+					>
 						{#each features as f, i (f.name)}
 							<button
 								onclick={() => (selectedIndex = i)}
 								class="rounded-t-md px-3 py-2 text-xs font-medium transition-colors
 									{i === selectedIndex
-									? 'border-b-2 border-violet-500 text-violet-600'
-									: 'text-slate-400 hover:text-slate-600'}"
+									? 'border-b-2 border-violet-500 text-violet-600 dark:text-violet-300'
+									: 'text-slate-400 hover:text-slate-600 dark:hover:text-slate-300'}"
 							>
 								{fmt(f.name)}
 							</button>
@@ -84,28 +86,32 @@
 				{#if feature}
 					<div class="min-h-0 flex-1 overflow-y-auto">
 						<!-- Feature meta -->
-						<div class="border-b border-slate-100 px-6 py-4">
-							<h2 class="mb-1 text-sm font-semibold text-slate-700">{fmt(feature.name)}</h2>
+						<div class="border-b border-slate-100 px-6 py-4 dark:border-slate-800">
+							<h2 class="mb-1 text-sm font-semibold text-slate-700 dark:text-slate-200">
+								{fmt(feature.name)}
+							</h2>
 							{#if feature.description}
-								<p class="mb-3 text-xs leading-relaxed text-slate-500">{feature.description}</p>
+								<p class="mb-3 text-xs leading-relaxed text-slate-500 dark:text-slate-400">
+									{feature.description}
+								</p>
 							{/if}
 							<div class="flex flex-wrap gap-1.5">
 								{#if feature.scope.boundedContext}
 									<span
-										class="rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-medium text-slate-500"
+										class="rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-medium text-slate-500 dark:bg-slate-800 dark:text-slate-400"
 									>
 										{feature.scope.boundedContext}
 									</span>
 								{/if}
 								{#if feature.scope.aggregate}
 									<span
-										class="rounded-full bg-violet-50 px-2 py-0.5 text-[10px] font-medium text-violet-600"
+										class="rounded-full bg-violet-50 px-2 py-0.5 text-[10px] font-medium text-violet-600 dark:bg-violet-950 dark:text-violet-300"
 									>
 										{feature.scope.aggregate}
 									</span>
 								{/if}
 								<span
-									class="rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-medium text-slate-400"
+									class="rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-medium text-slate-400 dark:bg-slate-800"
 								>
 									{feature.scenarios.length}
 									{feature.scenarios.length === 1 ? 'scenario' : 'scenarios'}
@@ -123,13 +129,13 @@
 									<li class="flex gap-3">
 										<!-- Step number -->
 										<div
-											class="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-violet-100 text-[10px] font-bold text-violet-600"
+											class="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-violet-100 text-[10px] font-bold text-violet-600 dark:bg-violet-900 dark:text-violet-300"
 										>
 											{si + 1}
 										</div>
 										<div class="min-w-0 flex-1">
 											<!-- Scenario name -->
-											<p class="mb-0.5 text-xs font-semibold text-slate-700">
+											<p class="mb-0.5 text-xs font-semibold text-slate-700 dark:text-slate-200">
 												{fmt(scenario.name)}
 											</p>
 											{#if scenario.description}
@@ -148,7 +154,7 @@
 													<div class="flex flex-wrap gap-1">
 														{#each scenario.given as ev (ev.event)}
 															<span
-																class="rounded-md border border-blue-200 bg-blue-50 px-2 py-0.5 text-[10px] font-medium text-blue-700"
+																class="rounded-md border border-blue-200 bg-blue-50 px-2 py-0.5 text-[10px] font-medium text-blue-700 dark:border-blue-900 dark:bg-blue-950 dark:text-blue-300"
 															>
 																{fmt(ev.event)}
 															</span>
@@ -161,7 +167,9 @@
 														class="w-10 shrink-0 text-[10px] font-bold tracking-wide text-slate-400 uppercase"
 														>Given</span
 													>
-													<span class="text-[10px] text-slate-300 italic">no prior events</span>
+													<span class="text-[10px] text-slate-300 italic dark:text-slate-500"
+														>no prior events</span
+													>
 												</div>
 											{/if}
 
@@ -174,33 +182,33 @@
 												<div class="flex flex-wrap gap-1">
 													{#if scenario.when.command}
 														<span
-															class="flex items-center gap-1 rounded-md border border-orange-200 bg-orange-50 px-2 py-0.5 text-[10px] font-medium text-orange-700"
+															class="flex items-center gap-1 rounded-md border border-orange-200 bg-orange-50 px-2 py-0.5 text-[10px] font-medium text-orange-700 dark:border-orange-900 dark:bg-orange-950 dark:text-orange-300"
 														>
 															<Zap size={9} class="shrink-0" />
 															{fmt(scenario.when.command)}
 														</span>
 													{:else if scenario.when.event}
 														<span
-															class="rounded-md border border-blue-200 bg-blue-50 px-2 py-0.5 text-[10px] font-medium text-blue-700"
+															class="rounded-md border border-blue-200 bg-blue-50 px-2 py-0.5 text-[10px] font-medium text-blue-700 dark:border-blue-900 dark:bg-blue-950 dark:text-blue-300"
 														>
 															{fmt(scenario.when.event)}
 														</span>
 													{:else if scenario.when.query}
 														<span
-															class="rounded-md border border-sky-200 bg-sky-50 px-2 py-0.5 text-[10px] font-medium text-sky-700"
+															class="rounded-md border border-sky-200 bg-sky-50 px-2 py-0.5 text-[10px] font-medium text-sky-700 dark:border-sky-900 dark:bg-sky-950 dark:text-sky-300"
 														>
 															{fmt(scenario.when.query)}
 														</span>
 													{:else if scenario.when.timer}
 														<span
-															class="rounded-md border border-amber-200 bg-amber-50 px-2 py-0.5 text-[10px] font-medium text-amber-700"
+															class="rounded-md border border-amber-200 bg-amber-50 px-2 py-0.5 text-[10px] font-medium text-amber-700 dark:border-amber-900 dark:bg-amber-950 dark:text-amber-300"
 														>
 															{fmt(scenario.when.timer)}
 														</span>
 													{/if}
 													{#if scenario.when.actor}
 														<span
-															class="rounded-md border border-slate-200 bg-slate-50 px-2 py-0.5 text-[10px] text-slate-500"
+															class="rounded-md border border-slate-200 bg-slate-50 px-2 py-0.5 text-[10px] text-slate-500 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-400"
 														>
 															by {fmt(scenario.when.actor)}
 														</span>
@@ -217,14 +225,14 @@
 												<div class="flex flex-wrap gap-1">
 													{#if outcomeKind(scenario) === 'rejection'}
 														<span
-															class="rounded-md border border-red-200 bg-red-50 px-2 py-0.5 text-[10px] font-medium text-red-600"
+															class="rounded-md border border-red-200 bg-red-50 px-2 py-0.5 text-[10px] font-medium text-red-600 dark:border-red-900 dark:bg-red-950 dark:text-red-300"
 														>
 															rejected: {fmt(scenario.then.rejection!.invariant)}
 														</span>
 													{:else}
 														{#each scenario.then.events ?? [] as ev (ev.event)}
 															<span
-																class="rounded-md border border-emerald-200 bg-emerald-50 px-2 py-0.5 text-[10px] font-medium text-emerald-700"
+																class="rounded-md border border-emerald-200 bg-emerald-50 px-2 py-0.5 text-[10px] font-medium text-emerald-700 dark:border-emerald-900 dark:bg-emerald-950 dark:text-emerald-300"
 															>
 																{fmt(ev.event)}
 															</span>

@@ -75,13 +75,13 @@
 			</div>
 
 			<div class="min-h-0 flex-1 overflow-y-auto">
-				<div class="flex flex-col gap-0 divide-y divide-slate-100">
+				<div class="flex flex-col gap-0 divide-y divide-slate-100 dark:divide-slate-800">
 					<!-- Scope section -->
 					<section class="px-6 py-4">
 						<p class="mb-2 text-[10px] font-semibold tracking-widest text-slate-400 uppercase">
 							Scope
 						</p>
-						<p class="font-mono text-xs text-slate-600">
+						<p class="font-mono text-xs text-slate-600 dark:text-slate-300">
 							{node.boundedContext}{node.aggregate ? ` / ${node.aggregate}` : ''}
 						</p>
 					</section>
@@ -91,7 +91,7 @@
 							<p class="mb-2 text-[10px] font-semibold tracking-widest text-slate-400 uppercase">
 								Actor Type
 							</p>
-							<div class="flex items-center gap-2 text-sm text-slate-700">
+							<div class="flex items-center gap-2 text-sm text-slate-700 dark:text-slate-200">
 								{#if node.actorType === 'system'}
 									<Bot size={14} class="text-slate-400" />
 								{:else}
@@ -108,7 +108,9 @@
 							<p class="mb-2 text-[10px] font-semibold tracking-widest text-slate-400 uppercase">
 								Description
 							</p>
-							<p class="text-sm leading-relaxed text-slate-600">{node.description}</p>
+							<p class="text-sm leading-relaxed text-slate-600 dark:text-slate-300">
+								{node.description}
+							</p>
 						</section>
 					{/if}
 
@@ -119,7 +121,9 @@
 							</p>
 							<ul class="space-y-2">
 								{#each node.responsibilities as responsibility (responsibility)}
-									<li class="text-sm leading-relaxed text-slate-600">{responsibility}</li>
+									<li class="text-sm leading-relaxed text-slate-600 dark:text-slate-300">
+										{responsibility}
+									</li>
 								{/each}
 							</ul>
 						</section>
@@ -132,7 +136,9 @@
 							</p>
 							<div class="flex flex-wrap gap-2">
 								{#each node.backedBy as system (system)}
-									<span class="rounded bg-slate-100 px-2 py-1 font-mono text-[11px] text-slate-600">
+									<span
+										class="rounded bg-slate-100 px-2 py-1 font-mono text-[11px] text-slate-600 dark:bg-slate-800 dark:text-slate-300"
+									>
 										{system}
 									</span>
 								{/each}
@@ -145,27 +151,34 @@
 							<p class="mb-2 text-[10px] font-semibold tracking-widest text-slate-400 uppercase">
 								Parameters
 							</p>
-							<p class="mb-3 text-sm font-semibold text-slate-800">Query Parameters</p>
+							<p class="mb-3 text-sm font-semibold text-slate-800 dark:text-slate-100">
+								Query Parameters
+							</p>
 							<ul class="space-y-3">
 								{#each node.parameters as f (f.name)}
 									<li class="flex flex-col gap-1">
 										<div class="flex items-center gap-2">
 											<Tag size={12} class="shrink-0 text-slate-400" />
-											<span class="font-mono text-xs font-medium text-slate-700">{f.name}</span>
+											<span class="font-mono text-xs font-medium text-slate-700 dark:text-slate-200"
+												>{f.name}</span
+											>
 											<span
-												class="ml-auto rounded bg-slate-100 px-1.5 py-0.5 text-[10px] text-slate-500"
+												class="ml-auto rounded bg-slate-100 px-1.5 py-0.5 text-[10px] text-slate-500 dark:bg-slate-800 dark:text-slate-400"
 											>
 												{typeLabel(f)}
 											</span>
 											{#if f.required}
-												<span class="text-[10px] font-bold text-rose-500" title="required">*</span>
+												<span
+													class="text-[10px] font-bold text-rose-500 dark:text-rose-400"
+													title="required">*</span
+												>
 											{/if}
 										</div>
 										{#if f.enum && f.enum.length > 0}
 											<div class="ml-5 flex flex-wrap gap-1">
 												{#each f.enum as val (val)}
 													<span
-														class="rounded border border-slate-200 bg-slate-50 px-1.5 py-0.5 font-mono text-[10px] text-slate-500"
+														class="rounded border border-slate-200 bg-slate-50 px-1.5 py-0.5 font-mono text-[10px] text-slate-500 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-400"
 													>
 														{val}
 													</span>
@@ -192,7 +205,7 @@
 											? 'Result Schema'
 											: 'Schema'}
 							</p>
-							<p class="mb-3 text-sm font-semibold text-slate-800">
+							<p class="mb-3 text-sm font-semibold text-slate-800 dark:text-slate-100">
 								{node.kind === 'command'
 									? 'Input Parameters'
 									: node.kind === 'event'
@@ -206,21 +219,26 @@
 									<li class="flex flex-col gap-1">
 										<div class="flex items-center gap-2">
 											<Tag size={12} class="shrink-0 text-slate-400" />
-											<span class="font-mono text-xs font-medium text-slate-700">{f.name}</span>
+											<span class="font-mono text-xs font-medium text-slate-700 dark:text-slate-200"
+												>{f.name}</span
+											>
 											<span
-												class="ml-auto rounded bg-slate-100 px-1.5 py-0.5 text-[10px] text-slate-500"
+												class="ml-auto rounded bg-slate-100 px-1.5 py-0.5 text-[10px] text-slate-500 dark:bg-slate-800 dark:text-slate-400"
 											>
 												{typeLabel(f)}
 											</span>
 											{#if f.required}
-												<span class="text-[10px] font-bold text-rose-500" title="required">*</span>
+												<span
+													class="text-[10px] font-bold text-rose-500 dark:text-rose-400"
+													title="required">*</span
+												>
 											{/if}
 										</div>
 										{#if f.enum && f.enum.length > 0}
 											<div class="ml-5 flex flex-wrap gap-1">
 												{#each f.enum as val (val)}
 													<span
-														class="rounded border border-slate-200 bg-slate-50 px-1.5 py-0.5 font-mono text-[10px] text-slate-500"
+														class="rounded border border-slate-200 bg-slate-50 px-1.5 py-0.5 font-mono text-[10px] text-slate-500 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-400"
 													>
 														{val}
 													</span>
@@ -242,7 +260,9 @@
 							</p>
 							<div class="flex flex-wrap gap-2">
 								{#each node.actors as actor (actor)}
-									<span class="rounded bg-slate-100 px-2 py-1 font-mono text-[11px] text-slate-600">
+									<span
+										class="rounded bg-slate-100 px-2 py-1 font-mono text-[11px] text-slate-600 dark:bg-slate-800 dark:text-slate-300"
+									>
 										{actor}
 									</span>
 								{/each}
@@ -256,12 +276,16 @@
 							<p class="mb-2 text-[10px] font-semibold tracking-widest text-indigo-400 uppercase">
 								Publishes
 							</p>
-							<p class="mb-3 text-sm font-semibold text-slate-800">Publishes Outcome</p>
+							<p class="mb-3 text-sm font-semibold text-slate-800 dark:text-slate-100">
+								Publishes Outcome
+							</p>
 							<ul class="space-y-1">
 								{#each node.publishes as e (e)}
 									<li class="flex items-center gap-2">
 										<CircleDot size={12} class="text-orange-400" />
-										<span class="font-mono text-sm font-medium text-slate-700">{e}</span>
+										<span class="font-mono text-sm font-medium text-slate-700 dark:text-slate-200"
+											>{e}</span
+										>
 									</li>
 								{/each}
 							</ul>
@@ -279,21 +303,24 @@
 									<li class="flex flex-col gap-1">
 										<div class="flex items-center gap-2">
 											<Tag size={12} class="shrink-0 text-slate-400" />
-											<span class="font-mono text-xs font-medium text-slate-700">{f.name}</span>
+											<span class="font-mono text-xs font-medium text-slate-700 dark:text-slate-200"
+												>{f.name}</span
+											>
 											<span
-												class="ml-auto rounded bg-slate-100 px-1.5 py-0.5 text-[10px] text-slate-500"
+												class="ml-auto rounded bg-slate-100 px-1.5 py-0.5 text-[10px] text-slate-500 dark:bg-slate-800 dark:text-slate-400"
 											>
 												{typeLabel(f)}
 											</span>
 											{#if f.required}
-												<span class="text-[10px] font-bold text-rose-500">*</span>
+												<span class="text-[10px] font-bold text-rose-500 dark:text-rose-400">*</span
+												>
 											{/if}
 										</div>
 										{#if f.enum && f.enum.length > 0}
 											<div class="ml-5 flex flex-wrap gap-1">
 												{#each f.enum as val (val)}
 													<span
-														class="rounded border border-blue-100 bg-blue-50 px-1.5 py-0.5 font-mono text-[10px] text-blue-600"
+														class="rounded border border-blue-100 bg-blue-50 px-1.5 py-0.5 font-mono text-[10px] text-blue-600 dark:border-blue-900 dark:bg-blue-950 dark:text-blue-300"
 													>
 														{val}
 													</span>
@@ -316,8 +343,14 @@
 							</p>
 							<ul class="space-y-3">
 								{#each node.invariants as inv (inv.name)}
-									<li class="rounded-lg border border-slate-100 bg-slate-50 px-3 py-2">
-										<p class="font-mono text-[11px] font-semibold text-slate-600">{inv.name}</p>
+									<li
+										class="rounded-lg border border-slate-100 bg-slate-50 px-3 py-2 dark:border-slate-700 dark:bg-slate-800"
+									>
+										<p
+											class="font-mono text-[11px] font-semibold text-slate-600 dark:text-slate-300"
+										>
+											{inv.name}
+										</p>
 										<p class="mt-1 text-xs leading-relaxed text-slate-400 italic">{inv.rule}</p>
 									</li>
 								{/each}
@@ -332,8 +365,12 @@
 							</p>
 							<ul class="space-y-3">
 								{#each node.constraints as constraint (constraint.name)}
-									<li class="rounded-lg border border-slate-100 bg-slate-50 px-3 py-2">
-										<p class="font-mono text-[11px] font-semibold text-slate-600">
+									<li
+										class="rounded-lg border border-slate-100 bg-slate-50 px-3 py-2 dark:border-slate-700 dark:bg-slate-800"
+									>
+										<p
+											class="font-mono text-[11px] font-semibold text-slate-600 dark:text-slate-300"
+										>
 											{constraint.name}
 										</p>
 										<p class="mt-1 text-xs leading-relaxed text-slate-400 italic">

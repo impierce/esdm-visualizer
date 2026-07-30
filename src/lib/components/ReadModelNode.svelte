@@ -24,11 +24,15 @@
 			{data.name.replaceAll('-', ' ')}
 		</span>
 	</div>
-	<div class="flex-1 overflow-auto bg-white px-4 py-3">
+	<div class="flex-1 overflow-auto bg-white px-4 py-3 dark:bg-slate-900">
 		{#if data.description}
-			<p class="line-clamp-2 text-xs leading-relaxed text-slate-500">{data.description}</p>
+			<p class="line-clamp-2 text-xs leading-relaxed text-slate-500 dark:text-slate-400">
+				{data.description}
+			</p>
 		{:else}
-			<div class="flex items-center justify-between gap-3 text-[11px] text-slate-500">
+			<div
+				class="flex items-center justify-between gap-3 text-[11px] text-slate-500 dark:text-slate-400"
+			>
 				<span>{data.projectionCount ?? 0} projections</span>
 				{#if data.aggregate}
 					<span class="truncate">{data.aggregate.replaceAll('-', ' ')}</span>

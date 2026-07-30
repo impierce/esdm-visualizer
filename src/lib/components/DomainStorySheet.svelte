@@ -73,16 +73,16 @@
 	}
 
 	const BADGE: Record<DomainStory['pointInTime'] & string, string> = {
-		'as-is': 'bg-slate-100 text-slate-500',
-		'to-be': 'bg-emerald-50 text-emerald-600'
+		'as-is': 'bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400',
+		'to-be': 'bg-emerald-50 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-300'
 	};
 	const GRANULARITY: Record<DomainStory['granularity'] & string, string> = {
-		'coarse-grained': 'bg-amber-50 text-amber-600',
-		'fine-grained': 'bg-sky-50 text-sky-600'
+		'coarse-grained': 'bg-amber-50 dark:bg-amber-950 text-amber-600 dark:text-amber-300',
+		'fine-grained': 'bg-sky-50 dark:bg-sky-950 text-sky-600 dark:text-sky-300'
 	};
 	const PURITY: Record<DomainStory['domainPurity'] & string, string> = {
-		pure: 'bg-violet-50 text-violet-600',
-		digitalized: 'bg-indigo-50 text-indigo-600'
+		pure: 'bg-violet-50 dark:bg-violet-950 text-violet-600 dark:text-violet-300',
+		digitalized: 'bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-300'
 	};
 </script>
 
@@ -93,7 +93,9 @@
 		showCloseButton={false}
 	>
 		<!-- Header -->
-		<div class="sticky top-0 z-10 flex items-center gap-3 bg-slate-800 px-6 py-5 shadow-sm">
+		<div
+			class="sticky top-0 z-10 flex items-center gap-3 bg-slate-800 px-6 py-5 shadow-sm dark:bg-slate-950"
+		>
 			<MessageCircle size={20} class="shrink-0 text-white/80" />
 			<div class="min-w-0 flex-1">
 				<SheetTitle class="text-sm font-bold tracking-widest text-white uppercase">
@@ -121,14 +123,16 @@
 			<div class="flex min-h-0 flex-1 flex-col overflow-hidden">
 				<!-- Story tabs (if >1) -->
 				{#if stories.length > 1}
-					<div class="flex gap-1 border-b border-slate-100 bg-white px-4 pt-3 pb-0">
+					<div
+						class="flex gap-1 border-b border-slate-100 bg-white px-4 pt-3 pb-0 dark:border-slate-800 dark:bg-slate-900"
+					>
 						{#each stories as s, i (s.name)}
 							<button
 								onclick={() => (selectedIndex = i)}
 								class="rounded-t-md px-3 py-2 text-xs font-medium transition-colors
 									{i === selectedIndex
-									? 'border-b-2 border-indigo-500 text-indigo-600'
-									: 'text-slate-400 hover:text-slate-600'}"
+									? 'border-b-2 border-indigo-500 text-indigo-600 dark:text-indigo-300'
+									: 'text-slate-400 hover:text-slate-600 dark:hover:text-slate-300'}"
 							>
 								{s.name.replaceAll('-', ' ')}
 							</button>
@@ -139,19 +143,21 @@
 				{#if story}
 					<div class="min-h-0 flex-1 overflow-y-auto">
 						<!-- Story meta -->
-						<div class="border-b border-slate-100 px-6 py-4">
-							<h2 class="mb-1 text-sm font-semibold text-slate-700">
+						<div class="border-b border-slate-100 px-6 py-4 dark:border-slate-800">
+							<h2 class="mb-1 text-sm font-semibold text-slate-700 dark:text-slate-200">
 								{story.name.replaceAll('-', ' ')}
 							</h2>
 							{#if story.description}
-								<p class="mb-3 text-xs leading-relaxed text-slate-500">{story.description}</p>
+								<p class="mb-3 text-xs leading-relaxed text-slate-500 dark:text-slate-400">
+									{story.description}
+								</p>
 							{/if}
 							<div class="flex flex-wrap gap-1.5">
 								{#if story.pointInTime}
 									<span
 										class="rounded-full px-2 py-0.5 text-[10px] font-medium {BADGE[
 											story.pointInTime
-										] ?? 'bg-slate-100 text-slate-500'}"
+										] ?? 'bg-slate-100 text-slate-500 dark:bg-slate-800 dark:text-slate-400'}"
 									>
 										{story.pointInTime}
 									</span>
@@ -160,7 +166,7 @@
 									<span
 										class="rounded-full px-2 py-0.5 text-[10px] font-medium {GRANULARITY[
 											story.granularity
-										] ?? 'bg-slate-100 text-slate-500'}"
+										] ?? 'bg-slate-100 text-slate-500 dark:bg-slate-800 dark:text-slate-400'}"
 									>
 										{story.granularity}
 									</span>
@@ -169,7 +175,7 @@
 									<span
 										class="rounded-full px-2 py-0.5 text-[10px] font-medium {PURITY[
 											story.domainPurity
-										] ?? 'bg-slate-100 text-slate-500'}"
+										] ?? 'bg-slate-100 text-slate-500 dark:bg-slate-800 dark:text-slate-400'}"
 									>
 										{story.domainPurity}
 									</span>
@@ -179,17 +185,17 @@
 
 						<!-- Actors legend -->
 						{#if story.actors && story.actors.length > 0}
-							<div class="border-b border-slate-100 px-6 py-4">
+							<div class="border-b border-slate-100 px-6 py-4 dark:border-slate-800">
 								<p class="mb-2 text-[10px] font-semibold tracking-widest text-slate-400 uppercase">
 									Actors
 								</p>
 								<div class="flex flex-wrap gap-2">
 									{#each story.actors as actor (actor.name)}
 										<div
-											class="flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-2.5 py-1.5"
+											class="flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 dark:border-slate-700 dark:bg-slate-900"
 										>
 											<UserRound size={12} class="shrink-0 text-slate-400" />
-											<span class="text-xs font-medium text-slate-600"
+											<span class="text-xs font-medium text-slate-600 dark:text-slate-300"
 												>{actor.name.replaceAll('-', ' ')}</span
 											>
 											{#if actor.annotation}
@@ -211,7 +217,7 @@
 									<li class="flex gap-3">
 										<!-- Step number -->
 										<div
-											class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-slate-100 text-[10px] font-bold text-slate-500"
+											class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-slate-100 text-[10px] font-bold text-slate-500 dark:bg-slate-800 dark:text-slate-400"
 										>
 											{sentence.sequenceNumber}
 										</div>
@@ -222,8 +228,8 @@
 												<div
 													class="flex items-center gap-1 rounded-lg border px-2 py-1 text-xs font-medium
 														{isActor(segment.ref)
-														? 'border-slate-300 bg-slate-50 text-slate-700'
-														: 'border-amber-200 bg-amber-50 text-amber-700'}"
+														? 'border-slate-300 bg-slate-50 text-slate-700 dark:border-slate-600 dark:bg-slate-800 dark:text-slate-200'
+														: 'border-amber-200 bg-amber-50 text-amber-700 dark:border-amber-900 dark:bg-amber-950 dark:text-amber-300'}"
 													title={segment.annotation}
 												>
 													{#if isActor(segment.ref)}
@@ -242,7 +248,7 @@
 												{#if segment.label !== undefined}
 													<div class="flex shrink-0 items-center gap-1 text-[10px] text-slate-400">
 														<span class="italic">{segment.label}</span>
-														<ArrowRight size={12} class="text-slate-300" />
+														<ArrowRight size={12} class="text-slate-300 dark:text-slate-500" />
 													</div>
 												{/if}
 											{/each}

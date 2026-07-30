@@ -18,11 +18,13 @@
 			{data.name.replaceAll('-', ' ')}
 		</span>
 	</div>
-	<div class="flex-1 overflow-auto bg-white px-4 py-3">
+	<div class="flex-1 overflow-auto bg-white px-4 py-3 dark:bg-slate-900">
 		{#if data.description}
-			<p class="line-clamp-3 text-xs leading-relaxed text-slate-500">{data.description}</p>
+			<p class="line-clamp-3 text-xs leading-relaxed text-slate-500 dark:text-slate-400">
+				{data.description}
+			</p>
 		{:else}
-			<p class="text-[11px] text-slate-300 italic">No description</p>
+			<p class="text-[11px] text-slate-400 italic dark:text-slate-500">No description</p>
 		{/if}
 	</div>
 </div>

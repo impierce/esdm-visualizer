@@ -59,17 +59,26 @@
 	// Persisted settings
 	let animateEdges = $state(true);
 	let showLegend = $state(false);
+	// Seeded from the pre-paint script in app.html so the toggle matches the rendered theme.
+	let darkMode = $state(false);
 
 	onMount(() => {
 		try {
 			const saved = localStorage.getItem(SETTINGS_KEY);
 			if (saved) {
-				const parsed = JSON.parse(saved) as { animateEdges?: boolean; showLegend?: boolean };
+				const parsed = JSON.parse(saved) as {
+					animateEdges?: boolean;
+					showLegend?: boolean;
+					darkMode?: boolean;
+				};
 				if (typeof parsed.animateEdges === 'boolean') {
 					animateEdges = parsed.animateEdges;
 				}
 				if (typeof parsed.showLegend === 'boolean') {
 					showLegend = parsed.showLegend;
+				}
+				if (typeof parsed.darkMode === 'boolean') {
+					darkMode = parsed.darkMode;
 				}
 			}
 		} catch {
@@ -77,9 +86,13 @@
 		}
 	});
 
+	$effect(() => {
+		document.documentElement.classList.toggle('dark', darkMode);
+	});
+
 	function saveSettings() {
 		try {
-			localStorage.setItem(SETTINGS_KEY, JSON.stringify({ animateEdges, showLegend }));
+			localStorage.setItem(SETTINGS_KEY, JSON.stringify({ animateEdges, showLegend, darkMode }));
 		} catch {
 			// ignore
 		}
@@ -493,29 +506,43 @@
 </script>
 
 <div class="flex h-screen w-screen flex-col">
-	<header class="flex items-center gap-3 border-b border-slate-200 bg-white px-6 py-3 shadow-sm">
+	<header
+		class="flex items-center gap-3 border-b border-slate-200 bg-white px-6 py-3 shadow-sm dark:border-slate-800 dark:bg-slate-900"
+	>
 		<!-- Left: scrollable breadcrumb + legend -->
 		<div class="flex min-w-0 flex-1 items-center gap-3 overflow-x-auto">
 			<div class="flex shrink-0 items-center gap-2">
 				<div class="relative flex h-7 w-7 items-center justify-center">
-					<Hexagon size={28} class="absolute text-slate-800" strokeWidth={1.5} />
-					<Hexagon size={20} class="absolute text-indigo-500" strokeWidth={2} />
+					<Hexagon
+						size={28}
+						class="absolute text-slate-800 dark:text-slate-200"
+						strokeWidth={1.5}
+					/>
+					<Hexagon
+						size={20}
+						class="absolute text-indigo-500 dark:text-indigo-400"
+						strokeWidth={2}
+					/>
 				</div>
-				<h1 class="text-sm font-bold tracking-widest text-slate-800 uppercase">ESDM</h1>
+				<h1 class="text-sm font-bold tracking-widest text-slate-800 uppercase dark:text-slate-100">
+					ESDM
+				</h1>
 			</div>
 			{#if !data.modelError}
 				{#if data.domainDisplayName}
-					<span class="h-4 w-px shrink-0 bg-slate-200"></span>
-					<span class="shrink-0 text-sm font-medium text-slate-700">{data.domainDisplayName}</span>
+					<span class="h-4 w-px shrink-0 bg-slate-200 dark:bg-slate-700"></span>
+					<span class="shrink-0 text-sm font-medium text-slate-700 dark:text-slate-200">
+						{data.domainDisplayName}
+					</span>
 				{/if}
-				<span class="h-4 w-px shrink-0 bg-slate-200"></span>
+				<span class="h-4 w-px shrink-0 bg-slate-200 dark:bg-slate-700"></span>
 				<DropdownMenu>
 					<DropdownMenuTrigger
-						class="flex cursor-pointer items-center gap-1.5 rounded-md px-2 py-1 text-sm text-slate-500 transition hover:bg-slate-100 focus-visible:outline-none"
+						class="flex cursor-pointer items-center gap-1.5 rounded-md px-2 py-1 text-sm text-slate-500 transition hover:bg-slate-100 focus-visible:outline-none dark:text-slate-400 dark:hover:bg-slate-800"
 					>
 						{data.boundedContextDisplayNames[data.selectedBoundedContext] ??
 							data.selectedBoundedContext}
-						<ChevronDown size={14} class="text-slate-400" />
+						<ChevronDown size={14} class="text-slate-400 dark:text-slate-500" />
 					</DropdownMenuTrigger>
 					<DropdownMenuContent class="w-max">
 						<DropdownMenuLabel>Bounded Context</DropdownMenuLabel>
@@ -531,13 +558,13 @@
 						</DropdownMenuRadioGroup>
 					</DropdownMenuContent>
 				</DropdownMenu>
-				<span class="shrink-0 text-slate-300">/</span>
+				<span class="shrink-0 text-slate-300 dark:text-slate-600">/</span>
 				<DropdownMenu>
 					<DropdownMenuTrigger
-						class="flex cursor-pointer items-center gap-1.5 rounded-md px-2 py-1 text-sm font-medium text-slate-700 transition hover:bg-slate-100 focus-visible:outline-none"
+						class="flex cursor-pointer items-center gap-1.5 rounded-md px-2 py-1 text-sm font-medium text-slate-700 transition hover:bg-slate-100 focus-visible:outline-none dark:text-slate-200 dark:hover:bg-slate-800"
 					>
 						{data.aggregateDisplayNames[data.selectedAggregate] ?? data.selectedAggregate}
-						<ChevronDown size={14} class="text-slate-400" />
+						<ChevronDown size={14} class="text-slate-400 dark:text-slate-500" />
 					</DropdownMenuTrigger>
 					<DropdownMenuContent class="w-max">
 						<DropdownMenuLabel>Aggregate</DropdownMenuLabel>
@@ -553,7 +580,7 @@
 			{/if}
 			<!-- Legend (shown only when setting is on) -->
 			{#if showLegend}
-				<span class="h-4 w-px shrink-0 bg-slate-200"></span>
+				<span class="h-4 w-px shrink-0 bg-slate-200 dark:bg-slate-700"></span>
 				<div class="flex items-center gap-6 text-xs text-slate-400">
 					<span class="flex shrink-0 items-center gap-1.5">
 						<span class="h-2.5 w-2.5 rounded-full {NODE_COLORS.actor.dot}"></span>
@@ -588,7 +615,7 @@
 				<!-- Stories -->
 				<button
 					onclick={() => (storySheetOpen = true)}
-					class="flex cursor-pointer items-center gap-1.5 rounded-md px-2.5 py-1.5 text-xs text-slate-400 transition hover:bg-slate-100 hover:text-slate-600 focus-visible:outline-none"
+					class="flex cursor-pointer items-center gap-1.5 rounded-md px-2.5 py-1.5 text-xs text-slate-400 transition hover:bg-slate-100 hover:text-slate-600 focus-visible:outline-none dark:hover:bg-slate-800 dark:hover:text-slate-200"
 					title="Domain Stories"
 				>
 					<MessageCircle size={14} />
@@ -597,22 +624,22 @@
 				<!-- Scenarios -->
 				<button
 					onclick={() => (featureSheetOpen = true)}
-					class="flex cursor-pointer items-center gap-1.5 rounded-md px-2.5 py-1.5 text-xs text-slate-400 transition hover:bg-slate-100 hover:text-slate-600 focus-visible:outline-none"
+					class="flex cursor-pointer items-center gap-1.5 rounded-md px-2.5 py-1.5 text-xs text-slate-400 transition hover:bg-slate-100 hover:text-slate-600 focus-visible:outline-none dark:hover:bg-slate-800 dark:hover:text-slate-200"
 					title="Feature Scenarios"
 				>
 					<Workflow size={14} />
 					Scenarios
 				</button>
-				<div class="h-4 w-px shrink-0 bg-slate-200"></div>
+				<div class="h-4 w-px shrink-0 bg-slate-200 dark:bg-slate-700"></div>
 				<button
 					onclick={() => (visibilitySheetOpen = true)}
-					class="flex cursor-pointer items-center gap-1.5 rounded-md p-1.5 text-slate-400 transition hover:bg-slate-100 hover:text-slate-600 focus-visible:outline-none"
+					class="flex cursor-pointer items-center gap-1.5 rounded-md p-1.5 text-slate-400 transition hover:bg-slate-100 hover:text-slate-600 focus-visible:outline-none dark:hover:bg-slate-800 dark:hover:text-slate-200"
 					title="Visibility"
 				>
 					<Eye size={16} />
 					{#if hiddenCommandIds.size > 0}
 						<span
-							class="min-w-4 rounded-full bg-indigo-500 px-1 text-center text-[10px] font-semibold text-white"
+							class="min-w-4 rounded-full bg-indigo-500 px-1 text-center text-[10px] font-semibold text-white dark:bg-indigo-400 dark:text-slate-900"
 						>
 							{hiddenCommandIds.size}
 						</span>
@@ -621,7 +648,7 @@
 				<!-- Settings -->
 				<DropdownMenu>
 					<DropdownMenuTrigger
-						class="flex cursor-pointer items-center gap-1.5 rounded-md p-1.5 text-slate-400 transition hover:bg-slate-100 hover:text-slate-600 focus-visible:outline-none"
+						class="flex cursor-pointer items-center gap-1.5 rounded-md p-1.5 text-slate-400 transition hover:bg-slate-100 hover:text-slate-600 focus-visible:outline-none dark:hover:bg-slate-800 dark:hover:text-slate-200"
 						title="Settings"
 					>
 						<Settings size={16} />
@@ -655,6 +682,19 @@
 								}}
 							/>
 						</div>
+						<div class="flex items-center justify-between px-2 py-2">
+							<div>
+								<p class="text-sm">Dark mode</p>
+								<p class="text-xs text-slate-400">For midnight modeling sessions</p>
+							</div>
+							<Switch
+								checked={darkMode}
+								onCheckedChange={(v) => {
+									darkMode = v;
+									saveSettings();
+								}}
+							/>
+						</div>
 					</DropdownMenuContent>
 				</DropdownMenu>
 			</div>
@@ -663,23 +703,32 @@
 	<div class="flex-1">
 		{#if data.modelError}
 			<div
-				class="flex h-full items-center justify-center bg-slate-50 px-6"
+				class="flex h-full items-center justify-center bg-slate-50 px-6 dark:bg-slate-950"
 				role="alert"
 				aria-live="polite"
 			>
 				<div
-					class="flex max-w-xl items-start gap-3 rounded-xl border border-red-200 bg-white px-5 py-4 shadow-sm"
+					class="flex max-w-xl items-start gap-3 rounded-xl border border-red-200 bg-white px-5 py-4 shadow-sm dark:border-red-900 dark:bg-slate-900"
 				>
-					<CircleAlert size={20} class="mt-0.5 shrink-0 text-red-500" />
-					<p class="text-sm leading-relaxed font-medium text-slate-700">{data.modelError}</p>
+					<CircleAlert size={20} class="mt-0.5 shrink-0 text-red-500 dark:text-red-400" />
+					<p class="text-sm leading-relaxed font-medium text-slate-700 dark:text-slate-200">
+						{data.modelError}
+					</p>
 				</div>
 			</div>
 		{:else}
-			<SvelteFlow {nodes} {edges} {nodeTypes} onnodeclick={onNodeClick} fitView>
+			<SvelteFlow
+				{nodes}
+				{edges}
+				{nodeTypes}
+				onnodeclick={onNodeClick}
+				colorMode={darkMode ? 'dark' : 'light'}
+				fitView
+			>
 				<Background
 					variant={BackgroundVariant.Dots}
-					bgColor="#f8fafc"
-					patternColor="#cbd5e1"
+					bgColor={darkMode ? '#020617' : '#f8fafc'}
+					patternColor={darkMode ? '#334155' : '#cbd5e1'}
 					gap={24}
 					size={2}
 				/>

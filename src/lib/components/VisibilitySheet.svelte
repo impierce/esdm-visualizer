@@ -47,10 +47,12 @@
 		showCloseButton={false}
 	>
 		<!-- Header -->
-		<div class="flex items-center gap-3 border-b border-slate-100 px-5 py-4">
-			<Eye size={18} class="shrink-0 text-slate-500" />
+		<div class="flex items-center gap-3 border-b border-slate-100 px-5 py-4 dark:border-slate-800">
+			<Eye size={18} class="shrink-0 text-slate-500 dark:text-slate-400" />
 			<div class="min-w-0 flex-1">
-				<SheetTitle class="text-sm font-semibold text-slate-800">Visibility</SheetTitle>
+				<SheetTitle class="text-sm font-semibold text-slate-800 dark:text-slate-100"
+					>Visibility</SheetTitle
+				>
 				<SheetDescription class="text-xs text-slate-400">
 					{visibleCount} of {commands.length} commands visible
 				</SheetDescription>
@@ -58,13 +60,13 @@
 			<div class="flex items-center gap-2">
 				<button
 					onclick={showAll}
-					class="rounded px-2 py-1 text-xs text-slate-500 hover:bg-slate-100 hover:text-slate-700"
+					class="rounded px-2 py-1 text-xs text-slate-500 hover:bg-slate-100 hover:text-slate-700 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-200"
 				>
 					All
 				</button>
 				<button
 					onclick={hideAll}
-					class="rounded px-2 py-1 text-xs text-slate-500 hover:bg-slate-100 hover:text-slate-700"
+					class="rounded px-2 py-1 text-xs text-slate-500 hover:bg-slate-100 hover:text-slate-700 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-200"
 				>
 					None
 				</button>
@@ -79,18 +81,18 @@
 				{#each commands as cmd (cmd.id)}
 					{@const visible = !hiddenCommandIds.has(cmd.id)}
 					<label
-						class="flex cursor-pointer items-start gap-3 px-5 py-2.5 transition hover:bg-slate-50"
+						class="flex cursor-pointer items-start gap-3 px-5 py-2.5 transition hover:bg-slate-50 dark:hover:bg-slate-800"
 					>
 						<input
 							type="checkbox"
-							class="mt-0.5 h-4 w-4 shrink-0 cursor-pointer rounded border-slate-300 accent-indigo-500"
+							class="mt-0.5 h-4 w-4 shrink-0 cursor-pointer rounded border-slate-300 accent-indigo-500 dark:border-slate-600"
 							checked={visible}
 							onchange={() => toggle(cmd.id)}
 						/>
 						<div class="min-w-0 flex-1">
 							<p
 								class="truncate text-sm font-medium {visible
-									? 'text-slate-700'
+									? 'text-slate-700 dark:text-slate-200'
 									: 'text-slate-400 line-through'}"
 							>
 								{cmd.name}
@@ -105,8 +107,8 @@
 									{#each cmd.publishes as ev (ev)}
 										<span
 											class="rounded-full px-1.5 py-0.5 text-[10px] {visible
-												? 'bg-amber-50 text-amber-600'
-												: 'bg-slate-100 text-slate-400'}"
+												? 'bg-amber-50 text-amber-600 dark:bg-amber-950 dark:text-amber-300'
+												: 'bg-slate-100 text-slate-400 dark:bg-slate-800'}"
 										>
 											{ev}
 										</span>
@@ -117,7 +119,7 @@
 						<span
 							class="mt-0.5 h-2 w-2 shrink-0 rounded-full {visible
 								? NODE_COLORS.command.dot
-								: 'bg-slate-200'}"
+								: 'bg-slate-200 dark:bg-slate-600'}"
 						></span>
 					</label>
 				{/each}
