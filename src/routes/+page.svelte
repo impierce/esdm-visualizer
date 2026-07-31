@@ -558,7 +558,7 @@
 						</DropdownMenuRadioGroup>
 					</DropdownMenuContent>
 				</DropdownMenu>
-				<span class="shrink-0 text-slate-300 dark:text-slate-600">/</span>
+				<span class="shrink-0 text-slate-300 dark:text-slate-500">/</span>
 				<DropdownMenu>
 					<DropdownMenuTrigger
 						class="flex cursor-pointer items-center gap-1.5 rounded-md px-2 py-1 text-sm font-medium text-slate-700 transition hover:bg-slate-100 focus-visible:outline-none dark:text-slate-200 dark:hover:bg-slate-800"

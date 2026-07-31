@@ -28,7 +28,7 @@
 		{#if data.description}
 			<p class="text-xs leading-relaxed text-slate-500 dark:text-slate-400">{data.description}</p>
 		{:else}
-			<p class="text-[11px] text-slate-400 italic dark:text-slate-500">No description</p>
+			<p class="text-[11px] text-slate-300 italic dark:text-slate-400">No description</p>
 		{/if}
 	</div>
 </div>

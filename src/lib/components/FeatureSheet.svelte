@@ -167,7 +167,7 @@
 														class="w-10 shrink-0 text-[10px] font-bold tracking-wide text-slate-400 uppercase"
 														>Given</span
 													>
-													<span class="text-[10px] text-slate-300 italic dark:text-slate-500"
+													<span class="text-[10px] text-slate-300 italic dark:text-slate-400"
 														>no prior events</span
 													>
 												</div>

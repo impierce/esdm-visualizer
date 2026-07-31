@@ -92,9 +92,9 @@
 		class="flex h-full w-130 max-w-[90vw] min-w-112.5 flex-col gap-0 overflow-hidden p-0 sm:max-w-130"
 		showCloseButton={false}
 	>
-		<!-- Header -->
+		<!-- Header. In dark mode slate-800 stays, so the banner reads as raised above the slate-900 sheet. -->
 		<div
-			class="sticky top-0 z-10 flex items-center gap-3 bg-slate-800 px-6 py-5 shadow-sm dark:bg-slate-950"
+			class="sticky top-0 z-10 flex items-center gap-3 border-b border-transparent bg-slate-800 px-6 py-5 shadow-sm dark:border-slate-700"
 		>
 			<MessageCircle size={20} class="shrink-0 text-white/80" />
 			<div class="min-w-0 flex-1">
