@@ -97,12 +97,16 @@ function extractInvariants(defs: InvariantDef[] | undefined): Invariant[] {
 	return defs.map((d) => ({ name: d.name, rule: d.rule }));
 }
 
-function readYamlFile(filePath: string): EsdmDocument | null {
+function readYamlFile(filePath: string): EsdmDocument[] {
 	try {
 		const content = readFileSync(filePath, 'utf-8');
-		return yaml.load(content) as EsdmDocument;
+		return yaml
+			.loadAll(content)
+			.filter(
+				(document): document is EsdmDocument => document !== null && typeof document === 'object'
+			);
 	} catch {
-		return null;
+		return [];
 	}
 }
 
@@ -120,9 +124,7 @@ function walkDir(dir: string): string[] {
 }
 
 export function loadEsdmDocs(dir: string): EsdmDocument[] {
-	return walkDir(dir)
-		.map(readYamlFile)
-		.filter((d): d is EsdmDocument => d !== null);
+	return walkDir(dir).flatMap(readYamlFile);
 }
 
 export function readDomainModel(configuredPath: string | undefined): DomainModelLoadResult {
